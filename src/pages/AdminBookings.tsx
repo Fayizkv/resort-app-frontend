@@ -21,7 +21,9 @@ const AdminBookings: React.FC = () => {
 
     const fetchBookings = async (pageNum: number) => {
         try {
-            const response = await axiosInstance.get(`/bookings?page=${pageNum}&limit=5`);
+            const limit = 5;
+            const skip = (pageNum - 1) * limit;
+            const response = await axiosInstance.get(`/bookings?limit=${limit}&skip=${skip}`);
             setBookings(response.data.data);
             setTotalPages(response.data.pagination.pages);
         } catch (error) {

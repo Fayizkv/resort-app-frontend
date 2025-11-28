@@ -38,7 +38,9 @@ const ManageResorts: React.FC = () => {
 
     const fetchResorts = async (page: number) => {
         try {
-            const response = await axiosInstance.get(`/resorts?page=${page}&limit=6`);
+            const limit = 6;
+            const skip = (page - 1) * limit;
+            const response = await axiosInstance.get(`/resorts?limit=${limit}&skip=${skip}`);
             setResorts(response.data.data);
             setPagination(response.data.pagination);
         } catch (error) {
