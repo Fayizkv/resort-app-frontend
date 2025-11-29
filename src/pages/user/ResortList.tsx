@@ -41,7 +41,7 @@ const ResortList: React.FC = () => {
                         <img src={resort.image} alt={resort.name} className="w-full h-48 object-cover" />
                         <div className="p-5">
                             <h3 className="text-xl font-bold mb-2 text-white">{resort.name}</h3>
-                            <p className="text-blue-200 mb-2 font-semibold">${resort.price} / night</p>
+                            <p className="text-blue-200 mb-2 font-semibold">₹{resort.price} / night</p>
                             <p className="text-sm text-white/70 mb-4 line-clamp-3">{resort.description}</p>
                             <button
                                 onClick={() => navigate('/book', { state: { resort } })}

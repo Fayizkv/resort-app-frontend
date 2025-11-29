@@ -209,7 +209,7 @@ const ManageResorts: React.FC = () => {
 
                         <div className="flex justify-between items-center mt-auto pt-4 border-t border-white/10">
                             <div className="text-white font-bold text-lg">
-                                {resort.price} <span className="text-sm font-normal text-white/60">/ night</span>
+                                ₹{resort.price} <span className="text-sm font-normal text-white/60">/ night</span>
                             </div>
                             <div className="relative" ref={openMenuId === resort._id ? menuRef : null}>
                                 <button

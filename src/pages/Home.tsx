@@ -101,7 +101,7 @@ const Home: React.FC = () => {
                 </div>
                 <div className="mb-8 p-5 bg-white/5 rounded-xl border border-white/10">
                     <p className="font-bold text-white mb-1">Total Price Estimate</p>
-                    <p className="text-sm text-blue-200">${resort.price} per night</p>
+                    <p className="text-sm text-blue-200">₹{resort.price} per night</p>
                 </div>
                 <button
                     type="submit"

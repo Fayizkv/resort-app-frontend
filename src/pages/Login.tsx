@@ -39,7 +39,7 @@ const Login: React.FC = () => {
                 </div>
 
                 <h2 className="text-3xl font-bold mb-2 text-center text-white">Welcome Back</h2>
-                <p className="text-center text-white/80 mb-8 text-sm">Sign in to manage your resort</p>
+                {/* <p className="text-center text-white/80 mb-8 text-sm">Sign in to manage your resort</p> */}
 
                 {error && (
                     <div className="bg-red-500/80 text-white p-3 rounded-lg mb-4 text-sm text-center backdrop-blur-sm">
@@ -84,11 +84,11 @@ const Login: React.FC = () => {
                     </button>
                 </form>
 
-                <div className="mt-6 text-center">
+                {/* <div className="mt-6 text-center">
                     <a href="#" className="text-sm text-white/70 hover:text-white transition-colors">
                         Forgot your password?
                     </a>
-                </div>
+                </div> */}
             </div>
 
             <div className="absolute bottom-4 text-white/40 text-xs">
