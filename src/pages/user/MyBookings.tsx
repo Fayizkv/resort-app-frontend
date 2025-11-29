@@ -17,16 +17,17 @@ const MyBookings: React.FC = () => {
     const [bookings, setBookings] = useState<Booking[]>([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [statusFilter, setStatusFilter] = useState('all');
 
     useEffect(() => {
-        fetchBookings(page);
-    }, [page]);
+        fetchBookings(page, statusFilter);
+    }, [page, statusFilter]);
 
-    const fetchBookings = async (pageNum: number) => {
+    const fetchBookings = async (pageNum: number, status: string) => {
         try {
             const limit = 5;
             const skip = (pageNum - 1) * limit;
-            const response = await axiosInstance.get(`/bookings/my?limit=${limit}&skip=${skip}`);
+            const response = await axiosInstance.get(`/bookings/my?limit=${limit}&skip=${skip}&status=${status}`);
             setBookings(response.data.data);
             setTotalPages(response.data.pagination.pages);
         } catch (error) {
@@ -36,7 +37,22 @@ const MyBookings: React.FC = () => {
 
     return (
         <div className="container mx-auto p-8">
-            <h1 className="text-3xl font-bold mb-8 text-white drop-shadow-md">My Bookings</h1>
+            <div className="flex justify-between items-center mb-8">
+                <h1 className="text-3xl font-bold text-white drop-shadow-md">My Bookings</h1>
+                <select
+                    value={statusFilter}
+                    onChange={(e) => {
+                        setStatusFilter(e.target.value);
+                        setPage(1);
+                    }}
+                    className="bg-white/20 text-white border border-white/30 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 backdrop-blur-sm"
+                >
+                    <option value="all" className="text-gray-800">All Statuses</option>
+                    <option value="pending" className="text-gray-800">Pending</option>
+                    <option value="confirmed" className="text-gray-800">Confirmed</option>
+                    <option value="cancelled" className="text-gray-800">Cancelled</option>
+                </select>
+            </div>
             <div className="space-y-6 mb-10">
                 {bookings.map((booking) => (
                     <div key={booking._id} className="bg-white/10 backdrop-blur-md border border-white/20 p-5 rounded-2xl shadow-xl flex items-center gap-6 hover:bg-white/15 transition-all">
@@ -62,7 +78,7 @@ const MyBookings: React.FC = () => {
 
             {/* Pagination Controls */}
             {totalPages > 1 && (
-                <div className="flex justify-center space-x-3">
+                <div className="flex justify-center items-center space-x-2">
                     <button
                         disabled={page === 1}
                         onClick={() => setPage(page - 1)}
@@ -70,7 +86,23 @@ const MyBookings: React.FC = () => {
                     >
                         Previous
                     </button>
-                    <span className="px-4 py-2 text-white font-medium bg-white/10 rounded-lg backdrop-blur-sm border border-white/10">Page {page} of {totalPages}</span>
+
+                    {/* Page Numbers */}
+                    <div className="flex space-x-1">
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                            <button
+                                key={pageNum}
+                                onClick={() => setPage(pageNum)}
+                                className={`px-3 py-2 rounded-lg backdrop-blur-sm transition-all ${page === pageNum
+                                    ? 'bg-blue-500/80 text-white border border-blue-400/50'
+                                    : 'bg-white/10 text-white hover:bg-white/20 border border-white/10'
+                                    }`}
+                            >
+                                {pageNum}
+                            </button>
+                        ))}
+                    </div>
+
                     <button
                         disabled={page === totalPages}
                         onClick={() => setPage(page + 1)}

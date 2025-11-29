@@ -250,7 +250,7 @@ const ManageResorts: React.FC = () => {
             </div>
 
             {/* Pagination Controls */}
-            <div className="flex justify-center mt-10 space-x-3">
+            <div className="flex justify-center items-center mt-10 space-x-2">
                 <button
                     disabled={pagination.page === 1}
                     onClick={() => setPagination({ ...pagination, page: pagination.page - 1 })}
@@ -258,9 +258,25 @@ const ManageResorts: React.FC = () => {
                 >
                     Previous
                 </button>
-                <span className="px-4 py-2 text-white font-medium bg-white/10 rounded-lg backdrop-blur-sm border border-white/10">
-                    Page {pagination.page} of {pagination.pages}
-                </span>
+
+                {/* Page Numbers */}
+                {pagination.pages > 1 && (
+                    <div className="flex space-x-1">
+                        {Array.from({ length: pagination.pages }, (_, i) => i + 1).map((pageNum) => (
+                            <button
+                                key={pageNum}
+                                onClick={() => setPagination({ ...pagination, page: pageNum })}
+                                className={`px-3 py-2 rounded-lg backdrop-blur-sm transition-all ${pagination.page === pageNum
+                                        ? 'bg-blue-500/80 text-white border border-blue-400/50'
+                                        : 'bg-white/10 text-white hover:bg-white/20 border border-white/10'
+                                    }`}
+                            >
+                                {pageNum}
+                            </button>
+                        ))}
+                    </div>
+                )}
+
                 <button
                     disabled={pagination.page === pagination.pages}
                     onClick={() => setPagination({ ...pagination, page: pagination.page + 1 })}

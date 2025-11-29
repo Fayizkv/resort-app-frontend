@@ -56,7 +56,7 @@ const ResortList: React.FC = () => {
 
             {/* Pagination Controls */}
             {totalPages > 1 && (
-                <div className="flex justify-center space-x-3">
+                <div className="flex justify-center items-center space-x-2">
                     <button
                         disabled={page === 1}
                         onClick={() => setPage(page - 1)}
@@ -64,7 +64,23 @@ const ResortList: React.FC = () => {
                     >
                         Previous
                     </button>
-                    <span className="px-4 py-2 text-white font-medium bg-white/10 rounded-lg backdrop-blur-sm border border-white/10">Page {page} of {totalPages}</span>
+
+                    {/* Page Numbers */}
+                    <div className="flex space-x-1">
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                            <button
+                                key={pageNum}
+                                onClick={() => setPage(pageNum)}
+                                className={`px-3 py-2 rounded-lg backdrop-blur-sm transition-all ${page === pageNum
+                                    ? 'bg-blue-500/80 text-white border border-blue-400/50'
+                                    : 'bg-white/10 text-white hover:bg-white/20 border border-white/10'
+                                    }`}
+                            >
+                                {pageNum}
+                            </button>
+                        ))}
+                    </div>
+
                     <button
                         disabled={page === totalPages}
                         onClick={() => setPage(page + 1)}
