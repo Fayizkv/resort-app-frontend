@@ -10,6 +10,7 @@ interface Resort {
     description: string;
     price: number;
     image: string;
+    images: string[];
     pool: boolean;
     turf: boolean;
     facilities: Record<string, boolean>;
@@ -30,6 +31,7 @@ const ManageResorts: React.FC = () => {
         description: '',
         price: 0,
         image: '',
+        galleryImages: '',
         pool: false,
         turf: false,
         facilities: [] as { key: string; value: boolean }[],
@@ -101,7 +103,13 @@ const ManageResorts: React.FC = () => {
         });
 
         const payload = {
-            ...formData,
+            name: formData.name,
+            description: formData.description,
+            price: formData.price,
+            image: formData.image,
+            images: formData.galleryImages.split(',').map(url => url.trim()).filter(url => url),
+            pool: formData.pool,
+            turf: formData.turf,
             facilities: facilitiesObject,
         };
 
@@ -131,6 +139,7 @@ const ManageResorts: React.FC = () => {
             description: resort.description,
             price: resort.price,
             image: resort.image,
+            galleryImages: resort.images ? resort.images.join(', ') : '',
             pool: resort.pool || false,
             turf: resort.turf || false,
             facilities: facilitiesArray,
@@ -159,6 +168,7 @@ const ManageResorts: React.FC = () => {
             description: '',
             price: 0,
             image: '',
+            galleryImages: '',
             pool: false,
             turf: false,
             facilities: []
@@ -174,6 +184,7 @@ const ManageResorts: React.FC = () => {
             description: '',
             price: 0,
             image: '',
+            galleryImages: '',
             pool: false,
             turf: false,
             facilities: []
@@ -267,8 +278,8 @@ const ManageResorts: React.FC = () => {
                                 key={pageNum}
                                 onClick={() => setPagination({ ...pagination, page: pageNum })}
                                 className={`px-3 py-2 rounded-lg backdrop-blur-sm transition-all ${pagination.page === pageNum
-                                        ? 'bg-blue-500/80 text-white border border-blue-400/50'
-                                        : 'bg-white/10 text-white hover:bg-white/20 border border-white/10'
+                                    ? 'bg-blue-500/80 text-white border border-blue-400/50'
+                                    : 'bg-white/10 text-white hover:bg-white/20 border border-white/10'
                                     }`}
                             >
                                 {pageNum}
@@ -312,7 +323,7 @@ const ManageResorts: React.FC = () => {
                             />
                         </div>
                         <div>
-                            <label className="block text-gray-700 text-sm font-bold mb-2">Image URL</label>
+                            <label className="block text-gray-700 text-sm font-bold mb-2">Main Image URL</label>
                             <input
                                 name="image"
                                 value={formData.image}
@@ -321,6 +332,18 @@ const ManageResorts: React.FC = () => {
                                 required
                             />
                         </div>
+                    </div>
+
+                    <div>
+                        <label className="block text-gray-700 text-sm font-bold mb-2">Gallery Images (comma separated URLs)</label>
+                        <textarea
+                            name="galleryImages"
+                            value={formData.galleryImages}
+                            onChange={handleChange}
+                            className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            rows={2}
+                            placeholder="https://example.com/img1.jpg, https://example.com/img2.jpg"
+                        />
                     </div>
 
                     <div>

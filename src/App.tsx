@@ -5,6 +5,7 @@ import { ToastProvider } from './context/ToastContext';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Home from './pages/Home';
+import LandingPage from './pages/LandingPage';
 import AdminBookings from './pages/AdminBookings';
 
 import ManageResorts from './pages/admin/ManageResorts';
@@ -26,11 +27,7 @@ const AppRoutes = () => {
         <Route path="/login" element={<Login />} />
         <Route
           path="/"
-          element={
-            <ProtectedRoute>
-              <Navigate to="/login" />
-            </ProtectedRoute>
-          }
+          element={<LandingPage />}
         />
         <Route
           path="/resorts"

@@ -6,7 +6,7 @@ interface Booking {
     resort: {
         name: string;
         image: string;
-    };
+    } | null;
     checkInDate: string;
     checkOutDate: string;
     status: string;
@@ -56,14 +56,31 @@ const MyBookings: React.FC = () => {
             <div className="space-y-6 mb-10">
                 {bookings.map((booking) => (
                     <div key={booking._id} className="bg-white/10 backdrop-blur-md border border-white/20 p-5 rounded-2xl shadow-xl flex items-center gap-6 hover:bg-white/15 transition-all">
-                        <img src={booking.resort.image} alt={booking.resort.name} className="w-28 h-28 object-cover rounded-xl shadow-md" />
-                        <div className="flex-1">
-                            <h3 className="text-xl font-bold text-white mb-1">{booking.resort.name}</h3>
-                            <p className="text-blue-200 mb-2">
-                                {new Date(booking.checkInDate).toLocaleDateString()} - {new Date(booking.checkOutDate).toLocaleDateString()}
-                            </p>
-                            <p className="text-sm text-white/70">Guests: {booking.numberOfGuests}</p>
-                        </div>
+                        {booking.resort ? (
+                            <>
+                                <img src={booking.resort.image} alt={booking.resort.name} className="w-28 h-28 object-cover rounded-xl shadow-md" />
+                                <div className="flex-1">
+                                    <h3 className="text-xl font-bold text-white mb-1">{booking.resort.name}</h3>
+                                    <p className="text-blue-200 mb-2">
+                                        {new Date(booking.checkInDate).toLocaleDateString()} - {new Date(booking.checkOutDate).toLocaleDateString()}
+                                    </p>
+                                    <p className="text-sm text-white/70">Guests: {booking.numberOfGuests}</p>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <div className="w-28 h-28 bg-white/5 rounded-xl flex items-center justify-center border border-white/10">
+                                    <span className="text-white/30 text-xs">Unavailable</span>
+                                </div>
+                                <div className="flex-1">
+                                    <h3 className="text-xl font-bold text-white/50 mb-1">Resort Unavailable</h3>
+                                    <p className="text-blue-200/50 mb-2">
+                                        {new Date(booking.checkInDate).toLocaleDateString()} - {new Date(booking.checkOutDate).toLocaleDateString()}
+                                    </p>
+                                    <p className="text-sm text-white/50">Guests: {booking.numberOfGuests}</p>
+                                </div>
+                            </>
+                        )}
                         <div>
                             <span className={`px-4 py-1.5 rounded-full text-white text-sm font-medium backdrop-blur-sm shadow-sm ${booking.status === 'confirmed' ? 'bg-green-500/80' :
                                 booking.status === 'cancelled' ? 'bg-red-500/80' : 'bg-yellow-500/80'
