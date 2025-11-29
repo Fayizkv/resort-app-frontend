@@ -12,12 +12,12 @@ interface Resort {
 }
 
 const heroImages = [
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3H-VD3Wc2L-4AxhLMZ8jRjQU4hrDXdgwfiw&s',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0gltIDH2LvxMhsK5KMEZ58Zcq2ifCx2fkNA&s',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmVBBG2nPwGQPO3qiCbizRb7Bu8MbjdHHCdg&s',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWKxFcgvsaG0_oJBWEAweULwv0tKPSwL9PoQ&s',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtSUGqGuSodk1_sYvGA-S-v9y_UVXNeF_MlQ&s',
-    'https://media.istockphoto.com/id/536048545/photo/tropical-resort.jpg?s=612x612&w=0&k=20&c=TR9a_ToayikLVagrZlq8ebvZFRZx_WH25q9_9m884Jk='
+    'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1920&q=80',
+    'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1920&q=80',
+    'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1920&q=80',
+    'https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1920&q=80',
+    'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80',
+    'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=1920&q=80'
 ];
 
 const LandingPage: React.FC = () => {
