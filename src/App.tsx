@@ -11,7 +11,7 @@ import ManageResorts from './pages/admin/ManageResorts';
 import ResortList from './pages/user/ResortList';
 import MyBookings from './pages/user/MyBookings';
 
-const ProtectedRoute = ({ children, role }: { children: JSX.Element; role?: 'admin' | 'user' }) => {
+const ProtectedRoute = ({ children, role }: { children: React.ReactNode; role?: 'admin' | 'user' }) => {
   const { user } = useAuth();
   if (!user) return <Navigate to="/login" />;
   if (role && user.role !== role) return <Navigate to="/" />;
