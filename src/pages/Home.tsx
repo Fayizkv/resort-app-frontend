@@ -45,33 +45,70 @@ const Home: React.FC = () => {
     };
 
     if (!resort) {
-        return <div className="p-8 text-center">Please select a resort to book. <button onClick={() => navigate('/resorts')} className="text-blue-600 underline">View Resorts</button></div>;
+        return (
+            <div className="min-h-[60vh] flex flex-col items-center justify-center text-white">
+                <p className="text-xl mb-4">Please select a resort to book.</p>
+                <button
+                    onClick={() => navigate('/resorts')}
+                    className="bg-white/20 hover:bg-white/30 text-white px-6 py-2 rounded-xl backdrop-blur-sm transition-all border border-white/30"
+                >
+                    View Resorts
+                </button>
+            </div>
+        );
     }
 
     return (
         <div className="container mx-auto p-8">
-            <h1 className="text-3xl font-bold mb-8 text-center">Book {resort.name}</h1>
-            {message && <p className="text-center mb-4 text-green-600">{message}</p>}
-            <form onSubmit={handleSubmit} className="max-w-lg mx-auto bg-white p-6 rounded shadow">
-                <div className="grid grid-cols-2 gap-4 mb-4">
+            <h1 className="text-3xl font-bold mb-8 text-center text-white drop-shadow-md">Book {resort.name}</h1>
+            {message && <p className="text-center mb-6 text-green-300 font-semibold bg-green-900/30 py-2 rounded-lg backdrop-blur-sm border border-green-500/30 max-w-lg mx-auto">{message}</p>}
+            <form onSubmit={handleSubmit} className="max-w-lg mx-auto bg-white/10 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-white/20">
+                <div className="grid grid-cols-2 gap-6 mb-6">
                     <div>
-                        <label className="block text-gray-700">Check-In</label>
-                        <input name="checkInDate" type="date" value={formData.checkInDate} onChange={handleChange} className="w-full border p-2 rounded" required />
+                        <label className="block text-white/90 mb-2 font-medium">Check-In</label>
+                        <input
+                            name="checkInDate"
+                            type="date"
+                            value={formData.checkInDate}
+                            onChange={handleChange}
+                            className="w-full bg-white/5 border border-white/20 p-3 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/40 transition-all"
+                            required
+                        />
                     </div>
                     <div>
-                        <label className="block text-gray-700">Check-Out</label>
-                        <input name="checkOutDate" type="date" value={formData.checkOutDate} onChange={handleChange} className="w-full border p-2 rounded" required />
+                        <label className="block text-white/90 mb-2 font-medium">Check-Out</label>
+                        <input
+                            name="checkOutDate"
+                            type="date"
+                            value={formData.checkOutDate}
+                            onChange={handleChange}
+                            className="w-full bg-white/5 border border-white/20 p-3 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/40 transition-all"
+                            required
+                        />
                     </div>
                 </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Guests</label>
-                    <input name="numberOfGuests" type="number" min="1" value={formData.numberOfGuests} onChange={handleChange} className="w-full border p-2 rounded" required />
+                <div className="mb-6">
+                    <label className="block text-white/90 mb-2 font-medium">Guests</label>
+                    <input
+                        name="numberOfGuests"
+                        type="number"
+                        min="1"
+                        value={formData.numberOfGuests}
+                        onChange={handleChange}
+                        className="w-full bg-white/5 border border-white/20 p-3 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/40 transition-all"
+                        required
+                    />
                 </div>
-                <div className="mb-6 p-4 bg-gray-50 rounded">
-                    <p className="font-bold">Total Price Estimate</p>
-                    <p className="text-sm text-gray-600">${resort.price} per night</p>
+                <div className="mb-8 p-5 bg-white/5 rounded-xl border border-white/10">
+                    <p className="font-bold text-white mb-1">Total Price Estimate</p>
+                    <p className="text-sm text-blue-200">${resort.price} per night</p>
                 </div>
-                <button type="submit" className="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700">Confirm Booking</button>
+                <button
+                    type="submit"
+                    className="w-full bg-white text-blue-900 font-bold p-3.5 rounded-xl hover:bg-blue-50 transition-all shadow-lg"
+                >
+                    Confirm Booking
+                </button>
             </form>
         </div>
     );

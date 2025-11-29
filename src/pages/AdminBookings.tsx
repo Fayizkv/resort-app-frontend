@@ -33,48 +33,58 @@ const AdminBookings: React.FC = () => {
 
     return (
         <div className="container mx-auto p-8">
-            <h1 className="text-3xl font-bold mb-6">Admin Dashboard - Bookings</h1>
-            <div className="overflow-x-auto mb-4">
-                <table className="min-w-full bg-white border border-gray-200">
+            <h1 className="text-3xl font-bold mb-8 text-white drop-shadow-md">Admin Dashboard - Bookings</h1>
+            <div className="overflow-x-auto mb-8 rounded-2xl shadow-xl border border-white/20">
+                <table className="min-w-full bg-white/10 backdrop-blur-md text-white">
                     <thead>
-                        <tr className="bg-gray-100">
-                            <th className="py-2 px-4 border-b">User</th>
-                            <th className="py-2 px-4 border-b">Resort</th>
-                            <th className="py-2 px-4 border-b">Check-In</th>
-                            <th className="py-2 px-4 border-b">Check-Out</th>
-                            <th className="py-2 px-4 border-b">Status</th>
+                        <tr className="bg-white/20 border-b border-white/10">
+                            <th className="py-4 px-6 text-left font-semibold">User</th>
+                            <th className="py-4 px-6 text-left font-semibold">Resort</th>
+                            <th className="py-4 px-6 text-left font-semibold">Check-In</th>
+                            <th className="py-4 px-6 text-left font-semibold">Check-Out</th>
+                            <th className="py-4 px-6 text-left font-semibold">Status</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="divide-y divide-white/10">
                         {bookings.map((booking) => (
-                            <tr key={booking._id} className="hover:bg-gray-50">
-                                <td className="py-2 px-4 border-b">{booking.user?.email || 'N/A'}</td>
-                                <td className="py-2 px-4 border-b">{booking.resort?.name || 'N/A'}</td>
-                                <td className="py-2 px-4 border-b">{new Date(booking.checkInDate).toLocaleDateString()}</td>
-                                <td className="py-2 px-4 border-b">{new Date(booking.checkOutDate).toLocaleDateString()}</td>
-                                <td className="py-2 px-4 border-b">{booking.status}</td>
+                            <tr key={booking._id} className="hover:bg-white/5 transition-colors">
+                                <td className="py-4 px-6">{booking.user?.email || 'N/A'}</td>
+                                <td className="py-4 px-6 font-medium">{booking.resort?.name || 'N/A'}</td>
+                                <td className="py-4 px-6 text-white/80">{new Date(booking.checkInDate).toLocaleDateString()}</td>
+                                <td className="py-4 px-6 text-white/80">{new Date(booking.checkOutDate).toLocaleDateString()}</td>
+                                <td className="py-4 px-6">
+                                    <span className={`px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm shadow-sm ${booking.status === 'confirmed' ? 'bg-green-500/80 text-white' :
+                                            booking.status === 'cancelled' ? 'bg-red-500/80 text-white' : 'bg-yellow-500/80 text-white'
+                                        }`}>
+                                        {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
+                                    </span>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
-            <div className="flex justify-center space-x-2">
-                <button
-                    disabled={page === 1}
-                    onClick={() => setPage(page - 1)}
-                    className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
-                >
-                    Previous
-                </button>
-                <span className="px-4 py-2">Page {page} of {totalPages}</span>
-                <button
-                    disabled={page === totalPages}
-                    onClick={() => setPage(page + 1)}
-                    className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
-                >
-                    Next
-                </button>
-            </div>
+
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+                <div className="flex justify-center space-x-3">
+                    <button
+                        disabled={page === 1}
+                        onClick={() => setPage(page - 1)}
+                        className={`px-4 py-2 rounded-lg backdrop-blur-sm transition-all ${page === 1 ? 'bg-white/5 text-white/30 cursor-not-allowed' : 'bg-white/20 text-white hover:bg-white/30 border border-white/20'}`}
+                    >
+                        Previous
+                    </button>
+                    <span className="px-4 py-2 text-white font-medium bg-white/10 rounded-lg backdrop-blur-sm border border-white/10">Page {page} of {totalPages}</span>
+                    <button
+                        disabled={page === totalPages}
+                        onClick={() => setPage(page + 1)}
+                        className={`px-4 py-2 rounded-lg backdrop-blur-sm transition-all ${page === totalPages ? 'bg-white/5 text-white/30 cursor-not-allowed' : 'bg-white/20 text-white hover:bg-white/30 border border-white/20'}`}
+                    >
+                        Next
+                    </button>
+                </div>
+            )}
         </div>
     );
 };

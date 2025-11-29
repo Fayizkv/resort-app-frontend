@@ -30,13 +30,7 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div
-            className="flex items-center justify-center h-screen bg-cover bg-center relative"
-            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1540541338287-41700207dee6?q=80&w=2070&auto=format&fit=crop')" }}
-        >
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-black/30 backdrop-blur-sm"></div>
-
+        <div className="flex items-center justify-center min-h-screen">
             <div className="relative z-10 bg-white/10 backdrop-blur-md p-8 rounded-2xl shadow-2xl w-96 border border-white/20">
                 <div className="flex justify-center mb-6">
                     <div className="bg-white/20 p-3 rounded-full">

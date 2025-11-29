@@ -36,45 +36,45 @@ const MyBookings: React.FC = () => {
 
     return (
         <div className="container mx-auto p-8">
-            <h1 className="text-3xl font-bold mb-6">My Bookings</h1>
-            <div className="space-y-4 mb-8">
+            <h1 className="text-3xl font-bold mb-8 text-white drop-shadow-md">My Bookings</h1>
+            <div className="space-y-6 mb-10">
                 {bookings.map((booking) => (
-                    <div key={booking._id} className="bg-white p-4 rounded shadow flex items-center gap-4">
-                        <img src={booking.resort.image} alt={booking.resort.name} className="w-24 h-24 object-cover rounded" />
+                    <div key={booking._id} className="bg-white/10 backdrop-blur-md border border-white/20 p-5 rounded-2xl shadow-xl flex items-center gap-6 hover:bg-white/15 transition-all">
+                        <img src={booking.resort.image} alt={booking.resort.name} className="w-28 h-28 object-cover rounded-xl shadow-md" />
                         <div className="flex-1">
-                            <h3 className="text-xl font-bold">{booking.resort.name}</h3>
-                            <p className="text-gray-600">
+                            <h3 className="text-xl font-bold text-white mb-1">{booking.resort.name}</h3>
+                            <p className="text-blue-200 mb-2">
                                 {new Date(booking.checkInDate).toLocaleDateString()} - {new Date(booking.checkOutDate).toLocaleDateString()}
                             </p>
-                            <p className="text-sm text-gray-500">Guests: {booking.numberOfGuests}</p>
+                            <p className="text-sm text-white/70">Guests: {booking.numberOfGuests}</p>
                         </div>
                         <div>
-                            <span className={`px-3 py-1 rounded text-white ${booking.status === 'confirmed' ? 'bg-green-500' :
-                                booking.status === 'cancelled' ? 'bg-red-500' : 'bg-yellow-500'
+                            <span className={`px-4 py-1.5 rounded-full text-white text-sm font-medium backdrop-blur-sm shadow-sm ${booking.status === 'confirmed' ? 'bg-green-500/80' :
+                                booking.status === 'cancelled' ? 'bg-red-500/80' : 'bg-yellow-500/80'
                                 }`}>
                                 {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
                             </span>
                         </div>
                     </div>
                 ))}
-                {bookings.length === 0 && <p className="text-gray-500">No bookings found.</p>}
+                {bookings.length === 0 && <p className="text-white/60 text-center py-8 bg-white/5 rounded-xl border border-white/10">No bookings found.</p>}
             </div>
 
             {/* Pagination Controls */}
             {totalPages > 1 && (
-                <div className="flex justify-center space-x-2">
+                <div className="flex justify-center space-x-3">
                     <button
                         disabled={page === 1}
                         onClick={() => setPage(page - 1)}
-                        className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50 hover:bg-gray-300 transition"
+                        className={`px-4 py-2 rounded-lg backdrop-blur-sm transition-all ${page === 1 ? 'bg-white/5 text-white/30 cursor-not-allowed' : 'bg-white/20 text-white hover:bg-white/30 border border-white/20'}`}
                     >
                         Previous
                     </button>
-                    <span className="px-4 py-2 text-gray-700">Page {page} of {totalPages}</span>
+                    <span className="px-4 py-2 text-white font-medium bg-white/10 rounded-lg backdrop-blur-sm border border-white/10">Page {page} of {totalPages}</span>
                     <button
                         disabled={page === totalPages}
                         onClick={() => setPage(page + 1)}
-                        className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50 hover:bg-gray-300 transition"
+                        className={`px-4 py-2 rounded-lg backdrop-blur-sm transition-all ${page === totalPages ? 'bg-white/5 text-white/30 cursor-not-allowed' : 'bg-white/20 text-white hover:bg-white/30 border border-white/20'}`}
                     >
                         Next
                     </button>
