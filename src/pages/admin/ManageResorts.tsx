@@ -16,15 +16,11 @@ interface Resort {
     facilities: Record<string, boolean>;
 }
 
-interface PaginationData {
-    total: number;
-    page: number;
-    pages: number;
-}
 
 const ManageResorts: React.FC = () => {
     const [resorts, setResorts] = useState<Resort[]>([]);
-    const [pagination, setPagination] = useState<PaginationData>({ total: 0, page: 1, pages: 1 });
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
@@ -43,8 +39,8 @@ const ManageResorts: React.FC = () => {
     const menuRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        fetchResorts(pagination.page);
-    }, [pagination.page]);
+        fetchResorts(page);
+    }, [page]);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -57,13 +53,13 @@ const ManageResorts: React.FC = () => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    const fetchResorts = async (page: number) => {
+    const fetchResorts = async (pageNum: number) => {
         try {
             const limit = 6;
-            const skip = (page - 1) * limit;
+            const skip = (pageNum - 1) * limit;
             const response = await axiosInstance.get(`/resorts?limit=${limit}&skip=${skip}`);
             setResorts(response.data.data);
-            setPagination(response.data.pagination);
+            setTotalPages(response.data.pagination.pages);
         } catch (error) {
             console.error('Error fetching resorts', error);
             showToast('Failed to fetch resorts', 'error');
@@ -122,7 +118,7 @@ const ManageResorts: React.FC = () => {
                 showToast('Resort added successfully', 'success');
             }
             closeModal();
-            fetchResorts(pagination.page);
+            fetchResorts(page);
         } catch (error) {
             console.error('Error saving resort', error);
             showToast('Failed to save resort', 'error');
@@ -153,7 +149,7 @@ const ManageResorts: React.FC = () => {
             try {
                 await axiosInstance.delete(`/resorts/${id}`);
                 showToast('Resort deleted successfully', 'success');
-                fetchResorts(pagination.page);
+                fetchResorts(page);
             } catch (error) {
                 console.error('Error deleting resort', error);
                 showToast('Failed to delete resort', 'error');
@@ -263,21 +259,21 @@ const ManageResorts: React.FC = () => {
             {/* Pagination Controls */}
             <div className="flex justify-center items-center mt-10 space-x-2">
                 <button
-                    disabled={pagination.page === 1}
-                    onClick={() => setPagination({ ...pagination, page: pagination.page - 1 })}
-                    className={`px-4 py-2 rounded-lg backdrop-blur-sm transition-all ${pagination.page === 1 ? 'bg-white/5 text-white/30 cursor-not-allowed' : 'bg-white/20 text-white hover:bg-white/30 border border-white/20'}`}
+                    disabled={page === 1}
+                    onClick={() => setPage(page - 1)}
+                    className={`px-4 py-2 rounded-lg backdrop-blur-sm transition-all ${page === 1 ? 'bg-white/5 text-white/30 cursor-not-allowed' : 'bg-white/20 text-white hover:bg-white/30 border border-white/20'}`}
                 >
                     Previous
                 </button>
 
                 {/* Page Numbers */}
-                {pagination.pages > 1 && (
+                {totalPages > 1 && (
                     <div className="flex space-x-1">
-                        {Array.from({ length: pagination.pages }, (_, i) => i + 1).map((pageNum) => (
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
                             <button
                                 key={pageNum}
-                                onClick={() => setPagination({ ...pagination, page: pageNum })}
-                                className={`px-3 py-2 rounded-lg backdrop-blur-sm transition-all ${pagination.page === pageNum
+                                onClick={() => setPage(pageNum)}
+                                className={`px-3 py-2 rounded-lg backdrop-blur-sm transition-all ${page === pageNum
                                     ? 'bg-blue-500/80 text-white border border-blue-400/50'
                                     : 'bg-white/10 text-white hover:bg-white/20 border border-white/10'
                                     }`}
@@ -289,9 +285,9 @@ const ManageResorts: React.FC = () => {
                 )}
 
                 <button
-                    disabled={pagination.page === pagination.pages}
-                    onClick={() => setPagination({ ...pagination, page: pagination.page + 1 })}
-                    className={`px-4 py-2 rounded-lg backdrop-blur-sm transition-all ${pagination.page === pagination.pages ? 'bg-white/5 text-white/30 cursor-not-allowed' : 'bg-white/20 text-white hover:bg-white/30 border border-white/20'}`}
+                    disabled={page === totalPages}
+                    onClick={() => setPage(page + 1)}
+                    className={`px-4 py-2 rounded-lg backdrop-blur-sm transition-all ${page === totalPages ? 'bg-white/5 text-white/30 cursor-not-allowed' : 'bg-white/20 text-white hover:bg-white/30 border border-white/20'}`}
                 >
                     Next
                 </button>
